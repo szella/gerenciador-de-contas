@@ -1,4 +1,4 @@
-package br.com.szella.gerenciadordecontas.model.mapper;
+package br.com.szella.gerenciadordecontas.mapper;
 
 import br.com.szella.gerenciadordecontas.model.entity.Cartao;
 import br.com.szella.gerenciadordecontas.model.request.CartaoEditarRequest;

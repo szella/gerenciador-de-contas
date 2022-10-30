@@ -1,6 +1,6 @@
 package br.com.szella.gerenciadordecontas.controller;
 
-import br.com.szella.gerenciadordecontas.model.mapper.CartaoMapper;
+import br.com.szella.gerenciadordecontas.mapper.CartaoMapper;
 import br.com.szella.gerenciadordecontas.model.request.CartaoEditarRequest;
 import br.com.szella.gerenciadordecontas.model.request.CartaoSalvarRequest;
 import br.com.szella.gerenciadordecontas.model.response.CartaoResponse;
