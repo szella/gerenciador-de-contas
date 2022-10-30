@@ -9,6 +9,8 @@ import br.com.szella.gerenciadordecontas.model.request.CartaoSalvarRequest;
 import br.com.szella.gerenciadordecontas.repository.CartaoRepository;
 import br.com.szella.gerenciadordecontas.service.CartaoService;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +26,7 @@ public class CartaoServiceImpl implements CartaoService {
         return cartaoRepository.findAll();
     }
 
+    @Cacheable(cacheNames = "cartao", key = "#id")
     @Override
     public Cartao buscarPorId(Long id) {
         return Optional
@@ -38,6 +41,7 @@ public class CartaoServiceImpl implements CartaoService {
         return cartaoRepository.save(CartaoMapper.mapCartaoSalvar(request));
     }
 
+    @CacheEvict(cacheNames = "cartao", key = "#id")
     @Override
     public Cartao editar(Long id, CartaoEditarRequest request) {
         var cartao = buscarPorId(id);
@@ -47,6 +51,7 @@ public class CartaoServiceImpl implements CartaoService {
         return cartao;
     }
 
+    @CacheEvict(cacheNames = "cartao", key = "#id")
     @Override
     public void deletar(Long id) {
         cartaoRepository.delete(buscarPorId(id));
