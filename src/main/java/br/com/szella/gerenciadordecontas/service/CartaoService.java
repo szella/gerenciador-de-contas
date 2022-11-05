@@ -1,19 +1,19 @@
 package br.com.szella.gerenciadordecontas.service;
 
-import br.com.szella.gerenciadordecontas.model.entity.Cartao;
+import br.com.szella.gerenciadordecontas.model.entity.CartaoEntity;
 import br.com.szella.gerenciadordecontas.model.request.CartaoEditarRequest;
 import br.com.szella.gerenciadordecontas.model.request.CartaoSalvarRequest;
 
 import java.util.List;
 
 public interface CartaoService {
-    List<Cartao> listar();
+    List<CartaoEntity> listar();
 
-    Cartao buscarPorId(Long id);
+    CartaoEntity buscarPorId(Long id);
 
-    Cartao salvar(CartaoSalvarRequest request);
+    CartaoEntity salvar(CartaoSalvarRequest request);
 
-    Cartao editar(Long id, CartaoEditarRequest request);
+    CartaoEntity editar(Long id, CartaoEditarRequest request);
 
     void deletar(Long id);
 }

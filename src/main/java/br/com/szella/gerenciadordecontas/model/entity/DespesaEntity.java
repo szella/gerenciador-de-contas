@@ -14,10 +14,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.math.BigDecimal;
-import java.time.Month;
-import java.time.Year;
 
 @Builder
 @Data
@@ -26,21 +25,22 @@ import java.time.Year;
 @NoArgsConstructor
 @Entity
 @Table(name = "despesa")
-public class Despesa {
+public class DespesaEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "posts_jpa_sequence_generator")
+    @SequenceGenerator(name = "posts_jpa_sequence_generator", sequenceName = "despesa_id_sequence")
     private Long id;
 
     private String nome;
     private BigDecimal valor;
-    private Month mes;
-    private Year ano;
+    private Integer mes;
+    private Integer ano;
 
     @Enumerated(EnumType.STRING)
     private TipoDespesaEnum tipoDespesaEnum;
 
     @ManyToOne
-    private Cartao cartao;
+    private CartaoEntity cartao;
 
 }

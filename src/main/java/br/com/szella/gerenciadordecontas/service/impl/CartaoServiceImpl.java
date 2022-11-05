@@ -3,7 +3,7 @@ package br.com.szella.gerenciadordecontas.service.impl;
 import br.com.szella.gerenciadordecontas.enums.MensagemDeErro;
 import br.com.szella.gerenciadordecontas.exception.DBException;
 import br.com.szella.gerenciadordecontas.mapper.CartaoMapper;
-import br.com.szella.gerenciadordecontas.model.entity.Cartao;
+import br.com.szella.gerenciadordecontas.model.entity.CartaoEntity;
 import br.com.szella.gerenciadordecontas.model.request.CartaoEditarRequest;
 import br.com.szella.gerenciadordecontas.model.request.CartaoSalvarRequest;
 import br.com.szella.gerenciadordecontas.repository.CartaoRepository;
@@ -22,13 +22,13 @@ public class CartaoServiceImpl implements CartaoService {
     private final CartaoRepository cartaoRepository;
 
     @Override
-    public List<Cartao> listar() {
+    public List<CartaoEntity> listar() {
         return cartaoRepository.findAll();
     }
 
     @Cacheable(cacheNames = "cartao", key = "#id")
     @Override
-    public Cartao buscarPorId(Long id) {
+    public CartaoEntity buscarPorId(Long id) {
         return Optional
                 .of(cartaoRepository.findById(id))
                 .filter(Optional::isPresent)
@@ -37,13 +37,13 @@ public class CartaoServiceImpl implements CartaoService {
     }
 
     @Override
-    public Cartao salvar(CartaoSalvarRequest request) {
+    public CartaoEntity salvar(CartaoSalvarRequest request) {
         return cartaoRepository.save(CartaoMapper.mapCartaoSalvar(request));
     }
 
     @CacheEvict(cacheNames = "cartao", key = "#id")
     @Override
-    public Cartao editar(Long id, CartaoEditarRequest request) {
+    public CartaoEntity editar(Long id, CartaoEditarRequest request) {
         var cartao = buscarPorId(id);
 
         CartaoMapper.mapCartaoEditar(request, cartao);

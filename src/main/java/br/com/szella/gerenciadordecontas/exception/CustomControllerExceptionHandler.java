@@ -10,15 +10,25 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class CustomControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(DBException.class)
-    protected ResponseEntity<ErroResponse> handleDBException(Exception e) {
+
+    private static ResponseEntity<ErroResponse> retornaErroResponse(Exception e, HttpStatus httpStatus) {
         return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
+                .status(httpStatus)
                 .body(
                         ErroResponse.builder()
                                 .mensagem(e.getMessage())
                                 .build()
                 );
+    }
+
+    @ExceptionHandler(DBException.class)
+    protected ResponseEntity<ErroResponse> handleDBException(Exception e) {
+        return retornaErroResponse(e, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(TipoDespesaException.class)
+    protected ResponseEntity<ErroResponse> handleTipoDespesaException(Exception e) {
+        return retornaErroResponse(e, HttpStatus.BAD_REQUEST);
     }
 
 }

@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Builder
@@ -19,10 +20,11 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Entity
 @Table(name = "cartao")
-public class Cartao {
+public class CartaoEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "posts_jpa_sequence_generator")
+    @SequenceGenerator(name = "posts_jpa_sequence_generator", sequenceName = "cartao_id_sequence")
     private Long id;
 
     private String nome;
