@@ -14,8 +14,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -41,14 +43,31 @@ public class DespesaServiceImpl implements DespesaService {
 
     @Override
     public DespesaEntity salvar(DespesaSalvarRequest request) {
-        var despesa = DespesaMapper.mapDespesaSalvar(request);
+        try {
+            var despesaBase = DespesaMapper.mapDespesaSalvar(request);
 
-        switch (request.getTipoDespesaEnum()) {
-            case CARTAO -> despesa.setCartao(cartaoService.buscarPorId(request.getIdCartao()));
-            default -> throw new TipoDespesaException(MensagemDeErro.SEM_TIPO_DESPESA.getMensagem());
+            switch (request.getTipoDespesaEnum()) {
+                case CARTAO -> despesaBase.setCartao(cartaoService.buscarPorId(request.getIdCartao()));
+                default -> throw new TipoDespesaException(MensagemDeErro.SEM_TIPO_DESPESA.getMensagem());
+            }
+
+            if (request.getParcelas() > 1) {
+                despesaBase.setAgrupamento(UUID.randomUUID().toString());
+            }
+
+            List<DespesaEntity> despesas = new ArrayList<>();
+            for (int x = 0; x < request.getParcelas(); x++) {
+                DespesaEntity despesa = (DespesaEntity) despesaBase.clone();
+                calcularMesAnoParcelamento(despesa, x);
+
+                despesas.add(despesa);
+            }
+            despesaRepository.saveAll(despesas);
+
+            return despesas.get(0);
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
         }
-
-        return despesaRepository.save(despesa);
     }
 
     @Override
@@ -79,5 +98,22 @@ public class DespesaServiceImpl implements DespesaService {
     @Override
     public void deletar(Long id) {
         despesaRepository.delete(buscarPorId(id));
+    }
+
+    private void calcularMesAnoParcelamento(DespesaEntity despesa, Integer parcela) {
+        Integer mes = despesa.getMes();
+        Integer ano = despesa.getAno();
+
+        for (Integer x = 0; x < parcela; x++) {
+            if (mes >= 12) {
+                mes = 1;
+                ano++;
+            } else {
+                mes++;
+            }
+        }
+
+        despesa.setMes(mes);
+        despesa.setAno(ano);
     }
 }

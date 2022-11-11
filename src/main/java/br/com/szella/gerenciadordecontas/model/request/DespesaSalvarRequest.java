@@ -13,4 +13,5 @@ public class DespesaSalvarRequest {
     private Integer ano;
     private TipoDespesaEnum tipoDespesaEnum;
     private Long idCartao;
+    private Integer parcelas;
 }
