@@ -6,10 +6,11 @@ import br.com.szella.gerenciadordecontas.mapper.CompraCartaoMapper;
 import br.com.szella.gerenciadordecontas.model.entity.CompraCartaoEntity;
 import br.com.szella.gerenciadordecontas.model.request.CompraCartaoEditarRequest;
 import br.com.szella.gerenciadordecontas.model.request.CompraCartaoSalvarRequest;
-import br.com.szella.gerenciadordecontas.repository.DespesaRepository;
+import br.com.szella.gerenciadordecontas.repository.CompraCartaoRepository;
 import br.com.szella.gerenciadordecontas.service.CartaoService;
 import br.com.szella.gerenciadordecontas.service.CompraCartaoService;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -21,20 +22,19 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class CompraCartaoServiceImpl implements CompraCartaoService {
-    private final DespesaRepository despesaRepository;
+    private final CompraCartaoRepository repository;
 
     private final CartaoService cartaoService;
 
     @Override
     public List<CompraCartaoEntity> listar() {
-        return despesaRepository.findAll();
+        return repository.findAll();
     }
 
-    @Cacheable(cacheNames = "despesa", key = "#id")
+    @Cacheable(cacheNames = "compra_cartao", key = "#id")
     @Override
     public CompraCartaoEntity buscarPorId(Long id) {
-        return Optional
-                .of(despesaRepository.findById(id))
+        return Optional.of(repository.findById(id))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .orElseThrow(() -> new DBException(MensagemDeErro.NAO_ENCONTRADO.getMensagem()));
@@ -43,49 +43,52 @@ public class CompraCartaoServiceImpl implements CompraCartaoService {
     @Override
     public CompraCartaoEntity salvar(CompraCartaoSalvarRequest request) {
         try {
-            var despesaBase = CompraCartaoMapper.mapEntity(request);
+            var entity = CompraCartaoMapper.mapEntity(request);
+            entity.setCartao(cartaoService.buscarPorId(request.getIdCartao()));
 
             if (request.getParcelas() > 1) {
-                despesaBase.setAgrupamento(UUID.randomUUID().toString());
+                entity.setAgrupamento(UUID.randomUUID().toString());
             }
 
-            List<CompraCartaoEntity> despesas = new ArrayList<>();
+            List<CompraCartaoEntity> entities = new ArrayList<>();
             for (int x = 0; x < request.getParcelas(); x++) {
-                CompraCartaoEntity despesa = (CompraCartaoEntity) despesaBase.clone();
-                calcularMesAnoParcelamento(despesa, x);
+                CompraCartaoEntity novaEntity = (CompraCartaoEntity) entity.clone();
+                calcularMesAnoParcelamento(novaEntity, x);
 
-                despesas.add(despesa);
+                entities.add(novaEntity);
             }
-            despesaRepository.saveAll(despesas);
+            repository.saveAll(entities);
 
-            return despesas.get(0);
+            return entities.get(0);
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
     }
 
+    @CacheEvict(cacheNames = "compra_cartao", key = "#id")
     @Override
     public CompraCartaoEntity editar(Long id, CompraCartaoEditarRequest request) {
-        var despesa = buscarPorId(id);
+        var entity = buscarPorId(id);
 
-        CompraCartaoMapper.mapAtualizacao(request, despesa);
+        CompraCartaoMapper.mapAtualizacao(request, entity);
 
-        if (!despesa.getCartao().getId().equals(request.getIdCartao())) {
-            despesa.setCartao(cartaoService.buscarPorId(request.getIdCartao()));
+        if (!entity.getCartao().getId().equals(request.getIdCartao())) {
+            entity.setCartao(cartaoService.buscarPorId(request.getIdCartao()));
         }
 
-        despesaRepository.save(despesa);
-        return despesa;
+        repository.save(entity);
+        return entity;
     }
 
+    @CacheEvict(cacheNames = "compra_cartao", key = "#id")
     @Override
     public void deletar(Long id) {
-        despesaRepository.delete(buscarPorId(id));
+        repository.delete(buscarPorId(id));
     }
 
-    private void calcularMesAnoParcelamento(CompraCartaoEntity despesa, Integer parcela) {
-        Integer mes = despesa.getMes();
-        Integer ano = despesa.getAno();
+    private void calcularMesAnoParcelamento(CompraCartaoEntity entity, Integer parcela) {
+        Integer mes = entity.getMes();
+        Integer ano = entity.getAno();
 
         for (Integer x = 0; x < parcela; x++) {
             if (mes >= 12) {
@@ -96,7 +99,7 @@ public class CompraCartaoServiceImpl implements CompraCartaoService {
             }
         }
 
-        despesa.setMes(mes);
-        despesa.setAno(ano);
+        entity.setMes(mes);
+        entity.setAno(ano);
     }
 }

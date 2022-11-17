@@ -27,19 +27,19 @@ public class CompraCartaoMapper {
         atual.setAno(novo.getAno());
     }
 
-    public static CompraCartaoResponse mapResponse(CompraCartaoEntity compraCartao) {
+    public static CompraCartaoResponse mapResponse(CompraCartaoEntity entity) {
         return CompraCartaoResponse.builder()
-                .id(compraCartao.getId())
-                .nome(compraCartao.getNome())
-                .valor(compraCartao.getValor())
-                .mes(compraCartao.getMes())
-                .ano(compraCartao.getAno())
-                .cartao(CartaoMapper.mapResponse(compraCartao.getCartao()))
+                .id(entity.getId())
+                .nome(entity.getNome())
+                .valor(entity.getValor())
+                .mes(entity.getMes())
+                .ano(entity.getAno())
+                .cartao(CartaoMapper.mapResponse(entity.getCartao()))
                 .build();
     }
 
-    public static List<CompraCartaoResponse> mapListaResponse(List<CompraCartaoEntity> compraCartaoList) {
-        return compraCartaoList.stream()
+    public static List<CompraCartaoResponse> mapListaResponse(List<CompraCartaoEntity> entities) {
+        return entities.stream()
                 .map(CompraCartaoMapper::mapResponse)
                 .collect(Collectors.toList());
     }

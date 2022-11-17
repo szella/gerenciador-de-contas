@@ -21,15 +21,15 @@ public class CartaoMapper {
         atual.setNome(novo.getNome());
     }
 
-    public static CartaoResponse mapResponse(CartaoEntity cartao) {
+    public static CartaoResponse mapResponse(CartaoEntity entity) {
         return CartaoResponse.builder()
-                .id(cartao.getId())
-                .nome(cartao.getNome())
+                .id(entity.getId())
+                .nome(entity.getNome())
                 .build();
     }
 
-    public static List<CartaoResponse> mapListaResponse(List<CartaoEntity> cartoes) {
-        return cartoes.stream()
+    public static List<CartaoResponse> mapListaResponse(List<CartaoEntity> entities) {
+        return entities.stream()
                 .map(CartaoMapper::mapResponse)
                 .collect(Collectors.toList());
     }

@@ -1,10 +1,10 @@
 package br.com.szella.gerenciadordecontas.controller;
 
-import br.com.szella.gerenciadordecontas.mapper.CompraCartaoMapper;
-import br.com.szella.gerenciadordecontas.model.request.CompraCartaoEditarRequest;
-import br.com.szella.gerenciadordecontas.model.request.CompraCartaoSalvarRequest;
-import br.com.szella.gerenciadordecontas.model.response.CompraCartaoResponse;
-import br.com.szella.gerenciadordecontas.service.CompraCartaoService;
+import br.com.szella.gerenciadordecontas.mapper.DespesaFixaMapper;
+import br.com.szella.gerenciadordecontas.model.request.DespesaFixaEditarRequest;
+import br.com.szella.gerenciadordecontas.model.request.DespesaFixaSalvarRequest;
+import br.com.szella.gerenciadordecontas.model.response.DespesaFixaResponse;
+import br.com.szella.gerenciadordecontas.service.DespesaFixaService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,38 +21,38 @@ import java.util.Objects;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/compras-cartao")
+@RequestMapping("/despesas-fixa")
 @AllArgsConstructor
-public class CompraCartaoController {
-    private final CompraCartaoService service;
+public class DespesaFixaController {
+    private final DespesaFixaService service;
 
     @GetMapping
-    public ResponseEntity<List<CompraCartaoResponse>> listar() {
+    public ResponseEntity<List<DespesaFixaResponse>> listar() {
         var entities = service.listar();
-        return ResponseEntity.ok(CompraCartaoMapper.mapListaResponse(entities));
+        return ResponseEntity.ok(DespesaFixaMapper.mapListaResponse(entities));
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<CompraCartaoResponse> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<DespesaFixaResponse> buscarPorId(@PathVariable Long id) {
         var entity = Optional
                 .ofNullable(service.buscarPorId(id))
                 .filter(Objects::nonNull)
-                .map(CompraCartaoMapper::mapResponse)
+                .map(DespesaFixaMapper::mapResponse)
                 .orElse(null);
 
         return ResponseEntity.ok(entity);
     }
 
     @PostMapping
-    public ResponseEntity<CompraCartaoResponse> salvar(@RequestBody CompraCartaoSalvarRequest request) {
+    public ResponseEntity<DespesaFixaResponse> salvar(@RequestBody DespesaFixaSalvarRequest request) {
         var entity = service.salvar(request);
-        return ResponseEntity.ok(CompraCartaoMapper.mapResponse(entity));
+        return ResponseEntity.ok(DespesaFixaMapper.mapResponse(entity));
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<CompraCartaoResponse> editar(@PathVariable Long id, @RequestBody CompraCartaoEditarRequest request) {
+    public ResponseEntity<DespesaFixaResponse> editar(@PathVariable Long id, @RequestBody DespesaFixaEditarRequest request) {
         var entity = service.editar(id, request);
-        return ResponseEntity.ok(CompraCartaoMapper.mapResponse(entity));
+        return ResponseEntity.ok(DespesaFixaMapper.mapResponse(entity));
     }
 
     @DeleteMapping(value = "/{id}")

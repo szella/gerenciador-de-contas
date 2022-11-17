@@ -6,13 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -24,23 +21,19 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "compra_cartao")
-public class CompraCartaoEntity implements Cloneable {
-
+@Table(name = "despesa_fixa")
+public class DespesaFixaEntity implements Cloneable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "posts_jpa_sequence_generator")
-    @SequenceGenerator(name = "posts_jpa_sequence_generator", sequenceName = "compra_cartao_id_sequence")
+    @SequenceGenerator(name = "posts_jpa_sequence_generator", sequenceName = "despesa_fixa_id_sequence")
     private Long id;
 
-    private String agrupamento;
-    private String nome;
     private BigDecimal valor;
     private Integer mes;
     private Integer ano;
 
     @ManyToOne
-    @JoinColumn(name = "cartao_id")
-    private CartaoEntity cartao;
+    private DespesaEntity despesa;
 
     @Override
     public Object clone() throws CloneNotSupportedException {

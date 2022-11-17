@@ -19,18 +19,18 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class CartaoServiceImpl implements CartaoService {
-    private final CartaoRepository cartaoRepository;
+    private final CartaoRepository repository;
 
     @Override
     public List<CartaoEntity> listar() {
-        return cartaoRepository.findAll();
+        return repository.findAll();
     }
 
     @Cacheable(cacheNames = "cartao", key = "#id")
     @Override
     public CartaoEntity buscarPorId(Long id) {
         return Optional
-                .of(cartaoRepository.findById(id))
+                .of(repository.findById(id))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .orElseThrow(() -> new DBException(MensagemDeErro.NAO_ENCONTRADO.getMensagem()));
@@ -38,23 +38,23 @@ public class CartaoServiceImpl implements CartaoService {
 
     @Override
     public CartaoEntity salvar(CartaoSalvarRequest request) {
-        return cartaoRepository.save(CartaoMapper.mapEntity(request));
+        return repository.save(CartaoMapper.mapEntity(request));
     }
 
     @CacheEvict(cacheNames = "cartao", key = "#id")
     @Override
     public CartaoEntity editar(Long id, CartaoEditarRequest request) {
-        var cartao = buscarPorId(id);
+        var entity = buscarPorId(id);
 
-        CartaoMapper.mapAtualizacao(request, cartao);
-        cartaoRepository.save(cartao);
-        return cartao;
+        CartaoMapper.mapAtualizacao(request, entity);
+        repository.save(entity);
+        return entity;
     }
 
     @CacheEvict(cacheNames = "cartao", key = "#id")
     @Override
     public void deletar(Long id) {
-        cartaoRepository.delete(buscarPorId(id));
+        repository.delete(buscarPorId(id));
     }
 
 }

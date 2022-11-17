@@ -24,40 +24,40 @@ import java.util.Optional;
 @RequestMapping("/cartoes")
 @AllArgsConstructor
 public class CartaoController {
-    private final CartaoService cartaoService;
+    private final CartaoService service;
 
     @GetMapping
     public ResponseEntity<List<CartaoResponse>> listar() {
-        var cartoes = cartaoService.listar();
-        return ResponseEntity.ok(CartaoMapper.mapListaResponse(cartoes));
+        var entities = service.listar();
+        return ResponseEntity.ok(CartaoMapper.mapListaResponse(entities));
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<CartaoResponse> buscarPorId(@PathVariable Long id) {
-        var cartao = Optional
-                .ofNullable(cartaoService.buscarPorId(id))
+        var entity = Optional
+                .ofNullable(service.buscarPorId(id))
                 .filter(Objects::nonNull)
                 .map(CartaoMapper::mapResponse)
                 .orElse(null);
 
-        return ResponseEntity.ok(cartao);
+        return ResponseEntity.ok(entity);
     }
 
     @PostMapping
     public ResponseEntity<CartaoResponse> salvar(@RequestBody CartaoSalvarRequest request) {
-        var cartao = cartaoService.salvar(request);
-        return ResponseEntity.ok(CartaoMapper.mapResponse(cartao));
+        var entity = service.salvar(request);
+        return ResponseEntity.ok(CartaoMapper.mapResponse(entity));
     }
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<CartaoResponse> editar(@PathVariable Long id, @RequestBody CartaoEditarRequest request) {
-        var cartao = cartaoService.editar(id, request);
-        return ResponseEntity.ok(CartaoMapper.mapResponse(cartao));
+        var entity = service.editar(id, request);
+        return ResponseEntity.ok(CartaoMapper.mapResponse(entity));
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<CartaoResponse> editar(@PathVariable Long id) {
-        cartaoService.deletar(id);
+    public ResponseEntity<Void> editar(@PathVariable Long id) {
+        service.deletar(id);
         return ResponseEntity.ok().build();
     }
 }
