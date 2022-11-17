@@ -2,14 +2,13 @@ package br.com.szella.gerenciadordecontas.service.impl;
 
 import br.com.szella.gerenciadordecontas.enums.MensagemDeErro;
 import br.com.szella.gerenciadordecontas.exception.DBException;
-import br.com.szella.gerenciadordecontas.exception.TipoDespesaException;
-import br.com.szella.gerenciadordecontas.mapper.DespesaMapper;
-import br.com.szella.gerenciadordecontas.model.entity.DespesaEntity;
-import br.com.szella.gerenciadordecontas.model.request.DespesaEditarRequest;
-import br.com.szella.gerenciadordecontas.model.request.DespesaSalvarRequest;
+import br.com.szella.gerenciadordecontas.mapper.CompraCartaoMapper;
+import br.com.szella.gerenciadordecontas.model.entity.CompraCartaoEntity;
+import br.com.szella.gerenciadordecontas.model.request.CompraCartaoEditarRequest;
+import br.com.szella.gerenciadordecontas.model.request.CompraCartaoSalvarRequest;
 import br.com.szella.gerenciadordecontas.repository.DespesaRepository;
 import br.com.szella.gerenciadordecontas.service.CartaoService;
-import br.com.szella.gerenciadordecontas.service.DespesaService;
+import br.com.szella.gerenciadordecontas.service.CompraCartaoService;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -21,19 +20,19 @@ import java.util.UUID;
 
 @Service
 @AllArgsConstructor
-public class DespesaServiceImpl implements DespesaService {
+public class CompraCartaoServiceImpl implements CompraCartaoService {
     private final DespesaRepository despesaRepository;
 
     private final CartaoService cartaoService;
 
     @Override
-    public List<DespesaEntity> listar() {
+    public List<CompraCartaoEntity> listar() {
         return despesaRepository.findAll();
     }
 
     @Cacheable(cacheNames = "despesa", key = "#id")
     @Override
-    public DespesaEntity buscarPorId(Long id) {
+    public CompraCartaoEntity buscarPorId(Long id) {
         return Optional
                 .of(despesaRepository.findById(id))
                 .filter(Optional::isPresent)
@@ -42,22 +41,17 @@ public class DespesaServiceImpl implements DespesaService {
     }
 
     @Override
-    public DespesaEntity salvar(DespesaSalvarRequest request) {
+    public CompraCartaoEntity salvar(CompraCartaoSalvarRequest request) {
         try {
-            var despesaBase = DespesaMapper.mapDespesaSalvar(request);
-
-            switch (request.getTipoDespesaEnum()) {
-                case CARTAO -> despesaBase.setCartao(cartaoService.buscarPorId(request.getIdCartao()));
-                default -> throw new TipoDespesaException(MensagemDeErro.SEM_TIPO_DESPESA.getMensagem());
-            }
+            var despesaBase = CompraCartaoMapper.mapEntity(request);
 
             if (request.getParcelas() > 1) {
                 despesaBase.setAgrupamento(UUID.randomUUID().toString());
             }
 
-            List<DespesaEntity> despesas = new ArrayList<>();
+            List<CompraCartaoEntity> despesas = new ArrayList<>();
             for (int x = 0; x < request.getParcelas(); x++) {
-                DespesaEntity despesa = (DespesaEntity) despesaBase.clone();
+                CompraCartaoEntity despesa = (CompraCartaoEntity) despesaBase.clone();
                 calcularMesAnoParcelamento(despesa, x);
 
                 despesas.add(despesa);
@@ -71,25 +65,14 @@ public class DespesaServiceImpl implements DespesaService {
     }
 
     @Override
-    public DespesaEntity editar(Long id, DespesaEditarRequest request) {
+    public CompraCartaoEntity editar(Long id, CompraCartaoEditarRequest request) {
         var despesa = buscarPorId(id);
 
-        DespesaMapper.mapDespesaEditar(request, despesa);
+        CompraCartaoMapper.mapAtualizacao(request, despesa);
 
         if (!despesa.getCartao().getId().equals(request.getIdCartao())) {
             despesa.setCartao(cartaoService.buscarPorId(request.getIdCartao()));
         }
-
-        switch (despesa.getTipoDespesaEnum()) {
-            case CARTAO -> {
-                if (!despesa.getCartao().getId().equals(request.getIdCartao())) {
-                    despesa.setCartao(cartaoService.buscarPorId(request.getIdCartao()));
-                }
-            }
-
-            default -> throw new TipoDespesaException(MensagemDeErro.SEM_TIPO_DESPESA.getMensagem());
-        }
-
 
         despesaRepository.save(despesa);
         return despesa;
@@ -100,7 +83,7 @@ public class DespesaServiceImpl implements DespesaService {
         despesaRepository.delete(buscarPorId(id));
     }
 
-    private void calcularMesAnoParcelamento(DespesaEntity despesa, Integer parcela) {
+    private void calcularMesAnoParcelamento(CompraCartaoEntity despesa, Integer parcela) {
         Integer mes = despesa.getMes();
         Integer ano = despesa.getAno();
 

@@ -5,7 +5,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
-public class DespesaEditarRequest {
+public class CompraCartaoEditarRequest {
     private String nome;
     private BigDecimal valor;
     private Integer mes;

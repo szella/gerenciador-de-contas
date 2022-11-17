@@ -11,26 +11,26 @@ import java.util.stream.Collectors;
 
 @UtilityClass
 public class CartaoMapper {
-    public static CartaoEntity mapCartaoSalvar(CartaoSalvarRequest request) {
+    public static CartaoEntity mapEntity(CartaoSalvarRequest request) {
         return CartaoEntity.builder()
                 .nome(request.getNome())
                 .build();
     }
 
-    public static void mapCartaoEditar(CartaoEditarRequest novo, CartaoEntity atual) {
+    public static void mapAtualizacao(CartaoEditarRequest novo, CartaoEntity atual) {
         atual.setNome(novo.getNome());
     }
 
-    public static CartaoResponse mapCartaoResponse(CartaoEntity cartao) {
+    public static CartaoResponse mapResponse(CartaoEntity cartao) {
         return CartaoResponse.builder()
                 .id(cartao.getId())
                 .nome(cartao.getNome())
                 .build();
     }
 
-    public static List<CartaoResponse> mapListCartaoResponse(List<CartaoEntity> cartoes) {
+    public static List<CartaoResponse> mapListaResponse(List<CartaoEntity> cartoes) {
         return cartoes.stream()
-                .map(CartaoMapper::mapCartaoResponse)
+                .map(CartaoMapper::mapResponse)
                 .collect(Collectors.toList());
     }
 }

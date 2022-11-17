@@ -38,7 +38,7 @@ public class CartaoServiceImpl implements CartaoService {
 
     @Override
     public CartaoEntity salvar(CartaoSalvarRequest request) {
-        return cartaoRepository.save(CartaoMapper.mapCartaoSalvar(request));
+        return cartaoRepository.save(CartaoMapper.mapEntity(request));
     }
 
     @CacheEvict(cacheNames = "cartao", key = "#id")
@@ -46,7 +46,7 @@ public class CartaoServiceImpl implements CartaoService {
     public CartaoEntity editar(Long id, CartaoEditarRequest request) {
         var cartao = buscarPorId(id);
 
-        CartaoMapper.mapCartaoEditar(request, cartao);
+        CartaoMapper.mapAtualizacao(request, cartao);
         cartaoRepository.save(cartao);
         return cartao;
     }

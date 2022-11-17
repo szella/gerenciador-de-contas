@@ -29,7 +29,7 @@ public class CartaoController {
     @GetMapping
     public ResponseEntity<List<CartaoResponse>> listar() {
         var cartoes = cartaoService.listar();
-        return ResponseEntity.ok(CartaoMapper.mapListCartaoResponse(cartoes));
+        return ResponseEntity.ok(CartaoMapper.mapListaResponse(cartoes));
     }
 
     @GetMapping(value = "/{id}")
@@ -37,7 +37,7 @@ public class CartaoController {
         var cartao = Optional
                 .ofNullable(cartaoService.buscarPorId(id))
                 .filter(Objects::nonNull)
-                .map(CartaoMapper::mapCartaoResponse)
+                .map(CartaoMapper::mapResponse)
                 .orElse(null);
 
         return ResponseEntity.ok(cartao);
@@ -46,13 +46,13 @@ public class CartaoController {
     @PostMapping
     public ResponseEntity<CartaoResponse> salvar(@RequestBody CartaoSalvarRequest request) {
         var cartao = cartaoService.salvar(request);
-        return ResponseEntity.ok(CartaoMapper.mapCartaoResponse(cartao));
+        return ResponseEntity.ok(CartaoMapper.mapResponse(cartao));
     }
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<CartaoResponse> editar(@PathVariable Long id, @RequestBody CartaoEditarRequest request) {
         var cartao = cartaoService.editar(id, request);
-        return ResponseEntity.ok(CartaoMapper.mapCartaoResponse(cartao));
+        return ResponseEntity.ok(CartaoMapper.mapResponse(cartao));
     }
 
     @DeleteMapping(value = "/{id}")
