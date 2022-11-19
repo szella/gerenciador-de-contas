@@ -24,8 +24,8 @@ import java.math.BigDecimal;
 @Table(name = "despesa_fixa")
 public class DespesaFixaEntity implements Cloneable {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "posts_jpa_sequence_generator")
-    @SequenceGenerator(name = "posts_jpa_sequence_generator", sequenceName = "despesa_fixa_id_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "despesa_fixa_id_sequence_generator")
+    @SequenceGenerator(name = "despesa_fixa_id_sequence_generator", sequenceName = "despesa_fixa_id_sequence")
     private Long id;
 
     private BigDecimal valor;

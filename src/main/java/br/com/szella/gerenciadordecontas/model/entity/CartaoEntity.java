@@ -23,8 +23,8 @@ import javax.persistence.Table;
 public class CartaoEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "posts_jpa_sequence_generator")
-    @SequenceGenerator(name = "posts_jpa_sequence_generator", sequenceName = "cartao_id_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cartao_id_sequence_generator")
+    @SequenceGenerator(name = "cartao_id_sequence_generator", sequenceName = "cartao_id_sequence")
     private Long id;
 
     private String nome;

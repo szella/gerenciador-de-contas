@@ -28,8 +28,8 @@ import java.math.BigDecimal;
 public class CompraCartaoEntity implements Cloneable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "posts_jpa_sequence_generator")
-    @SequenceGenerator(name = "posts_jpa_sequence_generator", sequenceName = "compra_cartao_id_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "compra_cartao_id_sequence_generator")
+    @SequenceGenerator(name = "compra_cartao_id_sequence_generator", sequenceName = "compra_cartao_id_sequence")
     private Long id;
 
     private String agrupamento;
