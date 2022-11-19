@@ -26,7 +26,7 @@ public class DespesaServiceImpl implements DespesaService {
         return despesaRepository.findAll();
     }
 
-    @Cacheable(cacheNames = "despesa", key = "#id")
+    @Cacheable("despesa")
     @Override
     public DespesaEntity buscarPorId(Long id) {
         return Optional
@@ -41,7 +41,7 @@ public class DespesaServiceImpl implements DespesaService {
         return despesaRepository.save(DespesaMapper.mapEntity(request));
     }
 
-    @CacheEvict(cacheNames = "despesa", key = "#id")
+    @CacheEvict("despesa")
     @Override
     public DespesaEntity editar(Long id, DespesaEditarRequest request) {
         var despesa = buscarPorId(id);
@@ -51,7 +51,7 @@ public class DespesaServiceImpl implements DespesaService {
         return despesa;
     }
 
-    @CacheEvict(cacheNames = "despesa", key = "#id")
+    @CacheEvict("despesa")
     @Override
     public void deletar(Long id) {
         despesaRepository.delete(buscarPorId(id));

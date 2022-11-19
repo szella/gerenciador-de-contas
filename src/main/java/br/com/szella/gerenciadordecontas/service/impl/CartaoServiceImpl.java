@@ -26,7 +26,7 @@ public class CartaoServiceImpl implements CartaoService {
         return repository.findAll();
     }
 
-    @Cacheable(cacheNames = "cartao", key = "#id")
+    @Cacheable("cartao")
     @Override
     public CartaoEntity buscarPorId(Long id) {
         return Optional
@@ -41,7 +41,7 @@ public class CartaoServiceImpl implements CartaoService {
         return repository.save(CartaoMapper.mapEntity(request));
     }
 
-    @CacheEvict(cacheNames = "cartao", key = "#id")
+    @CacheEvict("cartao")
     @Override
     public CartaoEntity editar(Long id, CartaoEditarRequest request) {
         var entity = buscarPorId(id);
@@ -51,7 +51,7 @@ public class CartaoServiceImpl implements CartaoService {
         return entity;
     }
 
-    @CacheEvict(cacheNames = "cartao", key = "#id")
+    @CacheEvict("cartao")
     @Override
     public void deletar(Long id) {
         repository.delete(buscarPorId(id));

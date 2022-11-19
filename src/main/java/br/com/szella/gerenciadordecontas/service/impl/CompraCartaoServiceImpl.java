@@ -31,7 +31,7 @@ public class CompraCartaoServiceImpl implements CompraCartaoService {
         return repository.findAll();
     }
 
-    @Cacheable(cacheNames = "compra_cartao", key = "#id")
+    @Cacheable("compra-cartao")
     @Override
     public CompraCartaoEntity buscarPorId(Long id) {
         return Optional.of(repository.findById(id))
@@ -65,7 +65,7 @@ public class CompraCartaoServiceImpl implements CompraCartaoService {
         }
     }
 
-    @CacheEvict(cacheNames = "compra_cartao", key = "#id")
+    @CacheEvict("compra-cartao")
     @Override
     public CompraCartaoEntity editar(Long id, CompraCartaoEditarRequest request) {
         var entity = buscarPorId(id);
@@ -80,7 +80,7 @@ public class CompraCartaoServiceImpl implements CompraCartaoService {
         return entity;
     }
 
-    @CacheEvict(cacheNames = "compra_cartao", key = "#id")
+    @CacheEvict("compra-cartao")
     @Override
     public void deletar(Long id) {
         repository.delete(buscarPorId(id));
