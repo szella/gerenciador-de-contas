@@ -14,6 +14,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -45,6 +46,7 @@ public class CompraCartaoServiceImpl implements CompraCartaoService {
         try {
             var entity = CompraCartaoMapper.mapEntity(request);
             entity.setCartao(cartaoService.buscarPorId(request.getIdCartao()));
+            entity.setDataCadastro(LocalDateTime.now());
 
             if (request.getParcelas() > 1) {
                 entity.setAgrupamento(UUID.randomUUID().toString());

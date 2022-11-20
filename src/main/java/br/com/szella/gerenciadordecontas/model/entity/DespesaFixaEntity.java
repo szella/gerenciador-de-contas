@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Builder
 @Data
@@ -31,6 +32,7 @@ public class DespesaFixaEntity implements Cloneable {
     private BigDecimal valor;
     private Integer mes;
     private Integer ano;
+    private LocalDateTime dataCadastro;
 
     @ManyToOne
     private DespesaEntity despesa;

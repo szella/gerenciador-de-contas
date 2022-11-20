@@ -31,6 +31,7 @@ public class DespesaFixaMapper {
                 .valor(entity.getValor())
                 .mes(entity.getMes())
                 .ano(entity.getAno())
+                .dataCadastro(entity.getDataCadastro())
                 .despesa(DespesaMapper.mapResponse(entity.getDespesa()))
                 .build();
     }

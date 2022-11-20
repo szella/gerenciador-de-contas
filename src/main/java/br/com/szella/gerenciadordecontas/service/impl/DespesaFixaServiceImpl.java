@@ -14,6 +14,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -44,6 +45,7 @@ public class DespesaFixaServiceImpl implements DespesaFixaService {
         try {
             var entity = DespesaFixaMapper.mapEntity(request);
             entity.setDespesa(despesaService.buscarPorId(request.getIdDespesa()));
+            entity.setDataCadastro(LocalDateTime.now());
 
             List<DespesaFixaEntity> entities = new ArrayList<>();
             for (int x = 0; x < request.getPeriodo(); x++) {

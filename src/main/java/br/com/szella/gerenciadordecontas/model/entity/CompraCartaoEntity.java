@@ -6,9 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Builder
 @Data
@@ -37,6 +36,7 @@ public class CompraCartaoEntity implements Cloneable {
     private BigDecimal valor;
     private Integer mes;
     private Integer ano;
+    private LocalDateTime dataCadastro;
 
     @ManyToOne
     @JoinColumn(name = "cartao_id")

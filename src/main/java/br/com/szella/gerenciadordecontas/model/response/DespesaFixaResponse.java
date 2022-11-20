@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -12,5 +13,6 @@ public class DespesaFixaResponse {
     private BigDecimal valor;
     private Integer mes;
     private Integer ano;
+    private LocalDateTime dataCadastro;
     private DespesaResponse despesa;
 }
