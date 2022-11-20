@@ -10,5 +10,5 @@ import java.util.List;
 public class GastosPorMesResponse {
     private Integer mes;
     List<CompraCartaoResponse> comprasCartao;
-    List<DespesaFixaResponse> despesaFixa;
+    List<DespesaFixaResponse> despesasFixa;
 }

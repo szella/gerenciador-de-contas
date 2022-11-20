@@ -58,7 +58,7 @@ public class GastoServiceImpl implements GastoService {
                             .add(GastosPorMesResponse.builder()
                                     .mes(mes)
                                     .comprasCartao(compraCartaoFilter)
-                                    .despesaFixa(despesaFixaFilter)
+                                    .despesasFixa(despesaFixaFilter)
                                     .build());
                 }
             }
