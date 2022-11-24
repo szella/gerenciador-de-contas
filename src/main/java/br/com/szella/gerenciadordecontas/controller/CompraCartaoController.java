@@ -7,6 +7,7 @@ import br.com.szella.gerenciadordecontas.model.response.CompraCartaoResponse;
 import br.com.szella.gerenciadordecontas.service.CompraCartaoService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/compras-cartao")
+@CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
 public class CompraCartaoController {
     private final CompraCartaoService service;
