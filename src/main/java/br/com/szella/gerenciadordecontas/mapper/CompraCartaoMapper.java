@@ -35,6 +35,7 @@ public class CompraCartaoMapper {
                 .mes(entity.getMes())
                 .ano(entity.getAno())
                 .dataCadastro(entity.getDataCadastro())
+                .agrupamento(entity.getAgrupamento())
                 .cartao(CartaoMapper.mapResponse(entity.getCartao()))
                 .build();
     }

@@ -15,5 +15,6 @@ public class CompraCartaoResponse {
     private Integer mes;
     private Integer ano;
     private LocalDateTime dataCadastro;
+    private String agrupamento;
     private CartaoResponse cartao;
 }
