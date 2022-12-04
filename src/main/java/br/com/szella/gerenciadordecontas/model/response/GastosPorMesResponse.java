@@ -11,4 +11,5 @@ public class GastosPorMesResponse {
     private Integer mes;
     List<CompraCartaoResponse> comprasCartao;
     List<DespesaFixaResponse> despesasFixa;
+    List<RecebimentoResponse> recebimentos;
 }
