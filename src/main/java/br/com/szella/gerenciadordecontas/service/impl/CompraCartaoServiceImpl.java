@@ -10,8 +10,6 @@ import br.com.szella.gerenciadordecontas.repository.CompraCartaoRepository;
 import br.com.szella.gerenciadordecontas.service.CartaoService;
 import br.com.szella.gerenciadordecontas.service.CompraCartaoService;
 import lombok.AllArgsConstructor;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -32,7 +30,6 @@ public class CompraCartaoServiceImpl implements CompraCartaoService {
         return repository.findAll();
     }
 
-    @Cacheable("compra-cartao")
     @Override
     public CompraCartaoEntity buscarPorId(Long id) {
         return Optional.of(repository.findById(id))
@@ -67,7 +64,6 @@ public class CompraCartaoServiceImpl implements CompraCartaoService {
         }
     }
 
-    @CacheEvict("compra-cartao")
     @Override
     public CompraCartaoEntity editar(Long id, CompraCartaoEditarRequest request) {
         var entity = buscarPorId(id);
@@ -82,7 +78,6 @@ public class CompraCartaoServiceImpl implements CompraCartaoService {
         return entity;
     }
 
-    @CacheEvict("compra-cartao")
     @Override
     public void deletar(Long id) {
         repository.delete(buscarPorId(id));

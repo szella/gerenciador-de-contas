@@ -9,8 +9,6 @@ import br.com.szella.gerenciadordecontas.model.request.RecebimentoSalvarRequest;
 import br.com.szella.gerenciadordecontas.repository.RecebimentoRepository;
 import br.com.szella.gerenciadordecontas.service.RecebimentoService;
 import lombok.AllArgsConstructor;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -29,7 +27,6 @@ public class RecebimentoServiceImpl implements RecebimentoService {
         return repository.findAll();
     }
 
-    @Cacheable("recebimento")
     @Override
     public RecebimentoEntity buscarPorId(Long id) {
         return Optional.of(repository.findById(id))
@@ -63,7 +60,6 @@ public class RecebimentoServiceImpl implements RecebimentoService {
         }
     }
 
-    @CacheEvict("recebimento")
     @Override
     public RecebimentoEntity editar(Long id, RecebimentoEditarRequest request) {
         var entity = buscarPorId(id);
@@ -74,7 +70,6 @@ public class RecebimentoServiceImpl implements RecebimentoService {
         return entity;
     }
 
-    @CacheEvict("recebimento")
     @Override
     public void deletar(Long id) {
         repository.delete(buscarPorId(id));

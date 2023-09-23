@@ -10,8 +10,6 @@ import br.com.szella.gerenciadordecontas.repository.DespesaFixaRepository;
 import br.com.szella.gerenciadordecontas.service.DespesaFixaService;
 import br.com.szella.gerenciadordecontas.service.DespesaService;
 import lombok.AllArgsConstructor;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -31,7 +29,6 @@ public class DespesaFixaServiceImpl implements DespesaFixaService {
         return repository.findAll();
     }
 
-    @Cacheable("despesa-fixa")
     @Override
     public DespesaFixaEntity buscarPorId(Long id) {
         return Optional.of(repository.findById(id))
@@ -62,7 +59,6 @@ public class DespesaFixaServiceImpl implements DespesaFixaService {
         }
     }
 
-    @CacheEvict("despesa-fixa")
     @Override
     public DespesaFixaEntity editar(Long id, DespesaFixaEditarRequest request) {
         var despesa = buscarPorId(id);
@@ -77,7 +73,6 @@ public class DespesaFixaServiceImpl implements DespesaFixaService {
         return despesa;
     }
 
-    @CacheEvict("despesa-fixa")
     @Override
     public void deletar(Long id) {
         repository.delete(buscarPorId(id));
