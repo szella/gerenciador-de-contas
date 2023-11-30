@@ -1,11 +1,8 @@
 package br.com.szella.gerenciadordecontas.service;
 
-import br.com.szella.gerenciadordecontas.model.entity.CompraCartaoEntity;
-import br.com.szella.gerenciadordecontas.model.entity.RecebimentoEntity;
-import br.com.szella.gerenciadordecontas.model.request.CompraCartaoEditarRequest;
-import br.com.szella.gerenciadordecontas.model.request.CompraCartaoSalvarRequest;
-import br.com.szella.gerenciadordecontas.model.request.RecebimentoEditarRequest;
-import br.com.szella.gerenciadordecontas.model.request.RecebimentoSalvarRequest;
+import br.com.szella.gerenciadordecontas.dominio.recebimento.RecebimentoEntity;
+import br.com.szella.gerenciadordecontas.dominio.recebimento.RecebimentoEditarRequest;
+import br.com.szella.gerenciadordecontas.dominio.recebimento.RecebimentoSalvarRequest;
 
 import java.util.List;
 

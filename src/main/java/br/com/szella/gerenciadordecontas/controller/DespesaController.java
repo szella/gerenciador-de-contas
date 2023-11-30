@@ -1,9 +1,9 @@
 package br.com.szella.gerenciadordecontas.controller;
 
-import br.com.szella.gerenciadordecontas.mapper.DespesaMapper;
-import br.com.szella.gerenciadordecontas.model.request.DespesaEditarRequest;
-import br.com.szella.gerenciadordecontas.model.request.DespesaSalvarRequest;
-import br.com.szella.gerenciadordecontas.model.response.DespesaResponse;
+import br.com.szella.gerenciadordecontas.dominio.despesa.DespesaMapper;
+import br.com.szella.gerenciadordecontas.dominio.despesa.DespesaEditarRequest;
+import br.com.szella.gerenciadordecontas.dominio.despesa.DespesaSalvarRequest;
+import br.com.szella.gerenciadordecontas.dominio.despesa.DespesaResponse;
 import br.com.szella.gerenciadordecontas.service.DespesaService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -1,9 +1,9 @@
 package br.com.szella.gerenciadordecontas.controller;
 
-import br.com.szella.gerenciadordecontas.mapper.CartaoMapper;
-import br.com.szella.gerenciadordecontas.model.request.CartaoEditarRequest;
-import br.com.szella.gerenciadordecontas.model.request.CartaoSalvarRequest;
-import br.com.szella.gerenciadordecontas.model.response.CartaoResponse;
+import br.com.szella.gerenciadordecontas.dominio.cartao.CartaoMapper;
+import br.com.szella.gerenciadordecontas.dominio.cartao.CartaoEditarRequest;
+import br.com.szella.gerenciadordecontas.dominio.cartao.CartaoSalvarRequest;
+import br.com.szella.gerenciadordecontas.dominio.cartao.CartaoResponse;
 import br.com.szella.gerenciadordecontas.service.CartaoService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -38,7 +37,6 @@ public class CartaoController {
     public ResponseEntity<CartaoResponse> buscarPorId(@PathVariable Long id) {
         var entity = Optional
                 .ofNullable(service.buscarPorId(id))
-                .filter(Objects::nonNull)
                 .map(CartaoMapper::mapResponse)
                 .orElse(null);
 
@@ -58,7 +56,7 @@ public class CartaoController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> editar(@PathVariable Long id) {
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
         service.deletar(id);
         return ResponseEntity.ok().build();
     }

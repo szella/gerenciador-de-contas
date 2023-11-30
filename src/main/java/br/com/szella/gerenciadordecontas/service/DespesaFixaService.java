@@ -1,8 +1,8 @@
 package br.com.szella.gerenciadordecontas.service;
 
-import br.com.szella.gerenciadordecontas.model.entity.DespesaFixaEntity;
-import br.com.szella.gerenciadordecontas.model.request.DespesaFixaEditarRequest;
-import br.com.szella.gerenciadordecontas.model.request.DespesaFixaSalvarRequest;
+import br.com.szella.gerenciadordecontas.dominio.despesaFixa.DespesaFixaEntity;
+import br.com.szella.gerenciadordecontas.dominio.despesaFixa.DespesaFixaEditarRequest;
+import br.com.szella.gerenciadordecontas.dominio.despesaFixa.DespesaFixaSalvarRequest;
 
 import java.util.List;
 

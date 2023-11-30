@@ -1,9 +1,10 @@
 package br.com.szella.gerenciadordecontas.controller;
 
-import br.com.szella.gerenciadordecontas.mapper.CompraCartaoMapper;
-import br.com.szella.gerenciadordecontas.model.request.CompraCartaoEditarRequest;
-import br.com.szella.gerenciadordecontas.model.request.CompraCartaoSalvarRequest;
-import br.com.szella.gerenciadordecontas.model.response.CompraCartaoResponse;
+import br.com.szella.gerenciadordecontas.dominio.compraCartao.CompraCartaoMapper;
+import br.com.szella.gerenciadordecontas.dominio.compraCartao.CompraCartaoEditarRequest;
+import br.com.szella.gerenciadordecontas.dominio.compraCartao.CompraCartaoSalvarRequest;
+import br.com.szella.gerenciadordecontas.dominio.compraCartao.CompraCartaoAgrupadoResponse;
+import br.com.szella.gerenciadordecontas.dominio.compraCartao.CompraCartaoResponse;
 import br.com.szella.gerenciadordecontas.service.CompraCartaoService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -34,11 +34,15 @@ public class CompraCartaoController {
         return ResponseEntity.ok(CompraCartaoMapper.mapListaResponse(entities));
     }
 
+    @GetMapping("/agrupado")
+    public ResponseEntity<List<CompraCartaoAgrupadoResponse>> listarAgrupado() {
+        return ResponseEntity.ok(service.listarAgrupado());
+    }
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<CompraCartaoResponse> buscarPorId(@PathVariable Long id) {
         var entity = Optional
                 .ofNullable(service.buscarPorId(id))
-                .filter(Objects::nonNull)
                 .map(CompraCartaoMapper::mapResponse)
                 .orElse(null);
 

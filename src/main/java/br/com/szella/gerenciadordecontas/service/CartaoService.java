@@ -1,8 +1,8 @@
 package br.com.szella.gerenciadordecontas.service;
 
-import br.com.szella.gerenciadordecontas.model.entity.CartaoEntity;
-import br.com.szella.gerenciadordecontas.model.request.CartaoEditarRequest;
-import br.com.szella.gerenciadordecontas.model.request.CartaoSalvarRequest;
+import br.com.szella.gerenciadordecontas.dominio.cartao.CartaoEntity;
+import br.com.szella.gerenciadordecontas.dominio.cartao.CartaoEditarRequest;
+import br.com.szella.gerenciadordecontas.dominio.cartao.CartaoSalvarRequest;
 
 import java.util.List;
 

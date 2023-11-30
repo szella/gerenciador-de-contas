@@ -2,10 +2,10 @@ package br.com.szella.gerenciadordecontas.service.impl;
 
 import br.com.szella.gerenciadordecontas.enums.MensagemDeErro;
 import br.com.szella.gerenciadordecontas.exception.DBException;
-import br.com.szella.gerenciadordecontas.mapper.DespesaMapper;
-import br.com.szella.gerenciadordecontas.model.entity.DespesaEntity;
-import br.com.szella.gerenciadordecontas.model.request.DespesaEditarRequest;
-import br.com.szella.gerenciadordecontas.model.request.DespesaSalvarRequest;
+import br.com.szella.gerenciadordecontas.dominio.despesa.DespesaMapper;
+import br.com.szella.gerenciadordecontas.dominio.despesa.DespesaEntity;
+import br.com.szella.gerenciadordecontas.dominio.despesa.DespesaEditarRequest;
+import br.com.szella.gerenciadordecontas.dominio.despesa.DespesaSalvarRequest;
 import br.com.szella.gerenciadordecontas.repository.DespesaRepository;
 import br.com.szella.gerenciadordecontas.service.DespesaService;
 import lombok.AllArgsConstructor;

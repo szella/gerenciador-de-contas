@@ -1,9 +1,9 @@
 package br.com.szella.gerenciadordecontas.controller;
 
-import br.com.szella.gerenciadordecontas.mapper.DespesaFixaMapper;
-import br.com.szella.gerenciadordecontas.model.request.DespesaFixaEditarRequest;
-import br.com.szella.gerenciadordecontas.model.request.DespesaFixaSalvarRequest;
-import br.com.szella.gerenciadordecontas.model.response.DespesaFixaResponse;
+import br.com.szella.gerenciadordecontas.dominio.despesaFixa.DespesaFixaMapper;
+import br.com.szella.gerenciadordecontas.dominio.despesaFixa.DespesaFixaEditarRequest;
+import br.com.szella.gerenciadordecontas.dominio.despesaFixa.DespesaFixaSalvarRequest;
+import br.com.szella.gerenciadordecontas.dominio.despesaFixa.DespesaFixaResponse;
 import br.com.szella.gerenciadordecontas.service.DespesaFixaService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -2,10 +2,10 @@ package br.com.szella.gerenciadordecontas.service.impl;
 
 import br.com.szella.gerenciadordecontas.enums.MensagemDeErro;
 import br.com.szella.gerenciadordecontas.exception.DBException;
-import br.com.szella.gerenciadordecontas.mapper.DespesaFixaMapper;
-import br.com.szella.gerenciadordecontas.model.entity.DespesaFixaEntity;
-import br.com.szella.gerenciadordecontas.model.request.DespesaFixaEditarRequest;
-import br.com.szella.gerenciadordecontas.model.request.DespesaFixaSalvarRequest;
+import br.com.szella.gerenciadordecontas.dominio.despesaFixa.DespesaFixaMapper;
+import br.com.szella.gerenciadordecontas.dominio.despesaFixa.DespesaFixaEntity;
+import br.com.szella.gerenciadordecontas.dominio.despesaFixa.DespesaFixaEditarRequest;
+import br.com.szella.gerenciadordecontas.dominio.despesaFixa.DespesaFixaSalvarRequest;
 import br.com.szella.gerenciadordecontas.repository.DespesaFixaRepository;
 import br.com.szella.gerenciadordecontas.service.DespesaFixaService;
 import br.com.szella.gerenciadordecontas.service.DespesaService;
@@ -47,7 +47,7 @@ public class DespesaFixaServiceImpl implements DespesaFixaService {
             List<DespesaFixaEntity> entities = new ArrayList<>();
             for (int x = 0; x < request.getPeriodo(); x++) {
                 DespesaFixaEntity novaEntity = (DespesaFixaEntity) entity.clone();
-                calcularMesAnoParcelamento(novaEntity, x);
+                novaEntity.setAnoMes(novaEntity.getAnoMes().plusMonths(x));
 
                 entities.add(novaEntity);
             }
@@ -78,20 +78,4 @@ public class DespesaFixaServiceImpl implements DespesaFixaService {
         repository.delete(buscarPorId(id));
     }
 
-    private void calcularMesAnoParcelamento(DespesaFixaEntity despesa, Integer parcela) {
-        Integer mes = despesa.getMes();
-        Integer ano = despesa.getAno();
-
-        for (Integer x = 0; x < parcela; x++) {
-            if (mes >= 12) {
-                mes = 1;
-                ano++;
-            } else {
-                mes++;
-            }
-        }
-
-        despesa.setMes(mes);
-        despesa.setAno(ano);
-    }
-}
+   }

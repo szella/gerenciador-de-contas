@@ -1,6 +1,6 @@
 package br.com.szella.gerenciadordecontas.exception;
 
-import br.com.szella.gerenciadordecontas.model.response.ErroResponse;
+import br.com.szella.gerenciadordecontas.dominio.response.ErroResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -24,11 +24,6 @@ public class CustomControllerExceptionHandler extends ResponseEntityExceptionHan
     @ExceptionHandler(DBException.class)
     protected ResponseEntity<ErroResponse> handleDBException(Exception e) {
         return retornaErroResponse(e, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(TipoDespesaException.class)
-    protected ResponseEntity<ErroResponse> handleTipoDespesaException(Exception e) {
-        return retornaErroResponse(e, HttpStatus.BAD_REQUEST);
     }
 
 }

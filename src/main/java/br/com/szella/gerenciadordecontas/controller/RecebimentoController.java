@@ -1,9 +1,9 @@
 package br.com.szella.gerenciadordecontas.controller;
 
-import br.com.szella.gerenciadordecontas.mapper.RecebimentoMapper;
-import br.com.szella.gerenciadordecontas.model.request.RecebimentoEditarRequest;
-import br.com.szella.gerenciadordecontas.model.request.RecebimentoSalvarRequest;
-import br.com.szella.gerenciadordecontas.model.response.RecebimentoResponse;
+import br.com.szella.gerenciadordecontas.dominio.recebimento.RecebimentoMapper;
+import br.com.szella.gerenciadordecontas.dominio.recebimento.RecebimentoEditarRequest;
+import br.com.szella.gerenciadordecontas.dominio.recebimento.RecebimentoSalvarRequest;
+import br.com.szella.gerenciadordecontas.dominio.recebimento.RecebimentoResponse;
 import br.com.szella.gerenciadordecontas.service.RecebimentoService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

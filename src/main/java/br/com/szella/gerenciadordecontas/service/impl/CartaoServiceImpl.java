@@ -2,10 +2,10 @@ package br.com.szella.gerenciadordecontas.service.impl;
 
 import br.com.szella.gerenciadordecontas.enums.MensagemDeErro;
 import br.com.szella.gerenciadordecontas.exception.DBException;
-import br.com.szella.gerenciadordecontas.mapper.CartaoMapper;
-import br.com.szella.gerenciadordecontas.model.entity.CartaoEntity;
-import br.com.szella.gerenciadordecontas.model.request.CartaoEditarRequest;
-import br.com.szella.gerenciadordecontas.model.request.CartaoSalvarRequest;
+import br.com.szella.gerenciadordecontas.dominio.cartao.CartaoMapper;
+import br.com.szella.gerenciadordecontas.dominio.cartao.CartaoEntity;
+import br.com.szella.gerenciadordecontas.dominio.cartao.CartaoEditarRequest;
+import br.com.szella.gerenciadordecontas.dominio.cartao.CartaoSalvarRequest;
 import br.com.szella.gerenciadordecontas.repository.CartaoRepository;
 import br.com.szella.gerenciadordecontas.service.CartaoService;
 import lombok.AllArgsConstructor;
