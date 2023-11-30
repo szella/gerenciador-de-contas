@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/cartoes")
+@RequestMapping("/v1/cartoes")
 @CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
 public class CartaoController {
